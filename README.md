@@ -1,4 +1,4 @@
-# DungeonCrawler2023
+# Raycasting engine
 
 <img src="resources/rayCastEngine.png" width="600">
 
