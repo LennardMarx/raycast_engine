@@ -111,7 +111,7 @@ struct context {
 };
 
 static void mainloop(void *arg) {
-  // chdir(SDL_GetBasePath());
+  chdir(SDL_GetBasePath());
   context *ctx = static_cast<context *>(arg);
 
   ctx->frameStart = SDL_GetTicks(); // limit framerate (see end of while loop)

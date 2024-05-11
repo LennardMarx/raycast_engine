@@ -18,16 +18,16 @@
 # g++ obj/*.o -I/usr/include/SDL2/ -I. -Iinclude/ -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image -o bin/raycasting
 
 #obj
-emcc -c src/main.cpp -o obj/main.o
-emcc -c src/UI.cpp -o obj/UI.o
-emcc -c src/entity.cpp -o obj/entity.o
-emcc -c src/eventChecks.cpp -o obj/eventChecks.o
-emcc -c src/raycaster.cpp -o obj/raycaster.o
-emcc -c src/rectangle.cpp -o obj/rectangle.o
-emcc -c src/wall.cpp -o obj/wall.o
+emcc -O1 -c src/main.cpp -o obj/main.o
+emcc -O1 -c src/UI.cpp -o obj/UI.o
+emcc -O1 -c src/entity.cpp -o obj/entity.o
+emcc -O1 -c src/eventChecks.cpp -o obj/eventChecks.o
+emcc -O1 -c src/raycaster.cpp -o obj/raycaster.o
+emcc -O1 -c src/rectangle.cpp -o obj/rectangle.o
+emcc -O1 -c src/wall.cpp -o obj/wall.o
 
 # program
 # g++ obj/*.o -I/usr/include/SDL2/ -I. -Iinclude/ -lSDL2main -lSDL2 -g -o bin/game
 # emcc obj/*.o -s WASM=1 -s USE_SDL=2 -O2 -o renderingC.js
-emcc obj/*.o -s WASM=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_SDL_TTF=2 --preload-file resources -o raycasting.js
+emcc obj/*.o -s WASM=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_SDL_TTF=2 --preload-file resources -O1 -o raycasting.js
 # emcc main.cpp -s WASM=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_SDL_TTF=2 --preload-file res -o index.js

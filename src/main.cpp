@@ -1,19 +1,19 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include <algorithm>
-#include <iostream>
-#include <set>
+// #include <algorithm>
+// #include <iostream>
+// #include <set>
 #include <string>
 #include <unistd.h>
 #include <vector>
 
 #include "../include/UI.h"
-#include "../include/entity.h"
+// #include "../include/entity.h"
 #include "../include/eventChecks.h"
 #include "../include/movement.h"
 #include "../include/raycaster.h"
-#include "../include/rectangle.h"
+// #include "../include/rectangle.h"
 #include "../include/wall.h"
 #include "../include/world_utils.h"
 
@@ -78,8 +78,9 @@ int main() {
   std::vector<Wall *> walls;
   // walls = createWorld(worldMap, WORLD_W, WORLD_H, WALL_SIZE,
   // ui.getRenderer());
-  walls =
-      createWorld2(worldMap2, WORLD_W, WORLD_H, WALL_SIZE, ui.getRenderer());
+  WorldUtils world_utils;
+  walls = world_utils.createWorld2(worldMap2, WORLD_W, WORLD_H, WALL_SIZE,
+                                   ui.getRenderer());
 
   Uint32 mouseState;
 
@@ -104,7 +105,7 @@ int main() {
       ui.printText("Game paused", 0, 0, {255, 255, 255, 150});
 
     } else {
-      SDL_SetRelativeMouseMode(SDL_TRUE);
+      // SDL_SetRelativeMouseMode(SDL_TRUE);
 
       // SDL_PumpEvents();
       // mouseState = SDL_GetMouseState(&x, &y);
