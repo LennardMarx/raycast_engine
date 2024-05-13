@@ -31,7 +31,7 @@ void EventChecks::checkEvents(RayCaster &player, UI &ui,
 
     if (event_ptr->motion.type == SDL_MOUSEMOTION && !pause) {
       player.setOrientation(player.getOrientation() +
-                            event_ptr->motion.xrel / 2);
+                            (float)event_ptr->motion.xrel / 2);
       ui.setViewAngle(ui.getViewAngle() - event_ptr->motion.yrel * 2);
       // std::cout << rotation;
       // std::cout << "\n";

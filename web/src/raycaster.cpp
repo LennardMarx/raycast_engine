@@ -1,11 +1,11 @@
 #include <SDL2/SDL.h>
-#include <array>
 #include <cmath>
-#include <utility>
+// #include <utility>
+#include <array>
 #include <vector>
 
 #include "../include/raycaster.h"
-#include <iostream>
+// #include <iostream>
 
 RayCaster::~RayCaster() {}
 
@@ -109,8 +109,8 @@ void RayCaster::emitLight(std::vector<Wall *> &_walls) {
   texture_info.clear();
   rays.clear();
 
-  int min = (orientation - fov / 2);
-  int max = (orientation + fov / 2);
+  int min = (orientation - (float)fov / 2);
+  int max = (orientation + (float)fov / 2);
 
   for (int i = min; i < max; i++) {
     x = position.x;
