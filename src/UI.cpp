@@ -86,8 +86,12 @@ void UI::drawMiniMap(std::vector<Wall *> walls,
 void UI::drawTexturedWalls(std::vector<float> distances,
                            std::vector<int> position_on_wall,
                            std::vector<SDL_Texture *> textures) {
-  // std::cout << distances.size() << ", " << position_on_wall.size() << ", " <<
-  // textures.size() << std::endl;
+  // std::cout << distances.size() << ", " << position_on_wall.size() << ", "
+  //           << textures.size() << std::endl;
+  // if (!textures[0]) {
+  //   std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
+  //   return;
+  // }
   for (int i = 0; i < distances.size(); i++) {
     tile_width = sizeX / distances.size();
     tile_height = 50000 / distances[i];
@@ -100,12 +104,20 @@ void UI::drawTexturedWalls(std::vector<float> distances,
     rect.h = tile_height;
 
     alpha = tile_height / 1.5;
+    // alpha = -0.00008 * tile_height * tile_height + 0.6 * tile_height - 10.0;
     if (alpha > 255)
       alpha = 255;
+    if (alpha < 0)
+      alpha = 0;
 
     setDrawColor(0, 0, 0, 255);
     SDL_RenderFillRect(renderer, &rect);
+    // check if rendere is null
+    // std::cout << (renderer == nullptr) << std::endl;
 
+    // setDrawColor(249, 245, 215, 255 - alpha);
+    // setDrawColor(249, 245, 215, alpha);
+    // setDrawColor(0, 0, 0, alpha);
     setDrawColor(0, 0, 0, 255 - alpha);
 
     float WALL_SIZE = 50;
@@ -135,9 +147,11 @@ void UI::drawBackground() {
   floor_rect.h = sizeY / 2 - view_angle;
 
   // setDrawColor(17, 0, 51, 200);
-  setDrawColor(0, 150, 200, 200);
+  // setDrawColor(0, 150, 200, 200);
+  setDrawColor(69, 133, 136, 200);
   SDL_RenderFillRect(renderer, &sky_rect);
-  setDrawColor(50, 50, 50, 200);
+  setDrawColor(40, 40, 40, 200);
+  // setDrawColor(249, 245, 215, 200);
   SDL_RenderFillRect(renderer, &floor_rect);
 }
 
@@ -158,7 +172,18 @@ int UI::getJumpHeight() { return jump_height; }
 
 void UI::printText(const char *text, int x, int y, SDL_Color color) {
   SDL_Surface *surface = TTF_RenderText_Blended(font, text, color);
-  SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+  SDL_Surface *optimizedSurface =
+      SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA32, 0);
+  if (!optimizedSurface) {
+    std::cerr << "Failed to optimize surface: " << SDL_GetError() << std::endl;
+    SDL_FreeSurface(surface);
+    return;
+  }
+
+  // SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+  SDL_Texture *texture =
+      SDL_CreateTextureFromSurface(renderer, optimizedSurface);
   SDL_Rect dest_rect = {x + (int)sizeX / 2 - surface->w * 3 / 2,
                         y + (int)sizeY / 2 - surface->h * 3 / 2, surface->w * 3,
                         surface->h * 3};
@@ -172,10 +197,18 @@ void UI::initialize(int sizeX, int sizeY, int posX) {
   window =
       SDL_CreateWindow("Ray Casting", 0, 0, sizeX, sizeY, SDL_WINDOW_SHOWN);
   renderer = SDL_CreateRenderer(
-      window, -1, SDL_RENDERER_ACCELERATED); // | SDL_RENDERER_PRESENTVSYNC
+      window, -1,
+      SDL_RENDERER_ACCELERATED |
+          SDL_RENDERER_PRESENTVSYNC); // | SDL_RENDERER_PRESENTVSYNC
+  SDL_SetWindowSize(window, sizeX, sizeY);
 
   TTF_Init();
   font = TTF_OpenFont("../resources/RetroGaming.ttf", 24);
+
+  if (!font) {
+    std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
+    return;
+  }
 
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
   // place window in middle of screen after scaling

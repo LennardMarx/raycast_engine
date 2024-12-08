@@ -48,9 +48,9 @@ void EventChecks::checkEvents(RayCaster &player, UI &ui,
       }
       if (event_ptr->key.repeat == 0) {
         switch (event_ptr->key.keysym.sym) {
-          // case SDLK_:
-          //     quit = true;
-          //     break;
+        case SDLK_x:
+          quit = true;
+          break;
         case SDLK_ESCAPE:
           // std::cout << (event_ptr->key.keysym.scancode);
           pause = !pause;

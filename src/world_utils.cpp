@@ -5,10 +5,14 @@ WorldUtils::createWorld2(std::array<std::array<std::string, 16>, 16> worldMap,
                          const int world_w, const int world_h,
                          const int wall_size, SDL_Renderer *&renderer) {
   std::vector<Wall *> walls;
-  const char *brick_wall =
-      "/home/lennard/Projects/raycast_engine/resources/gai_wall_1_240p.png";
-  const char *stone_wall = "/home/lennard/Projects/raycast_engine/resources/"
-                           "gai_wall_1_light_240p.png";
+  // const char *brick_wall =
+  //     "/home/lennard/Projects/raycast_engine/web/resources/gai_wall_1_240p.png";
+  // const char *brick_wall =
+  //     "/home/lennard/Projects/raycast_engine/web/textures/gai_wall_1_240p.png";
+  // const char *stone_wall = "/home/lennard/Projects/raycast_engine/web/"
+  //                          "textures/gai_wall_1_light_240p.png";
+  const char *brick_wall = "../resources/gai_wall_1_240p.png";
+  const char *stone_wall = "../resources/gai_wall_1_light_240p.png";
   const char *wall_img;
   char tile;
   int texture;
